@@ -57,6 +57,25 @@ products.forEach { println(it) }
     println("ผลรวมราคาสินค้า Electronics ที่ราคา > 500 บาท: $totalElecPriceOver500Sequence บาท")
     println("--------------------------------------------------")
 
+    println("กลุ่มสินค้าตามราคา")
+
+    val groupProducts = products.groupBy { products ->
+        when {
+            products.price <= 1000.0 -> "ไม่เกิน 1,000 บาท"
+            products.price in 1000.0..9999.0 -> "1,000 - 9,999"
+            else -> "10,000 บาทขึ้นไป"
+        }
+    }
+
+
+    groupProducts.forEach { (range, item) ->
+        println("$range")
+        item.forEach {println(" -${it.name} (${it.price})")}
+    }
+
+
+
+
 
 //    println("อภิปรายความแตกต่างระหว่าง List และ Sequence:")
 //    println("1. List Operations (วิธีที่ 1):")
