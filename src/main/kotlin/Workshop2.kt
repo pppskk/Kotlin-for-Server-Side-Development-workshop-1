@@ -4,6 +4,15 @@ import kotlin.math.PI
 
 // 1. กำหนด data class สำหรับเก็บข้อมูลสินค้า
 data class Product(val name: String, val price: Double, val category: String)
+val products = listOf(
+    Product("Laptop", 35000.0, "Electronics"),
+    Product("Smartphone", 25000.0, "Electronics"),
+    Product("T-shirt", 450.0, "Apparel"),
+    Product("Monitor", 7500.0, "Electronics"),
+    Product("Keyboard", 499.0, "Electronics"),
+    Product("Jeans", 1200.0, "Apparel"),
+    Product("Headphones", 1800.0, "Electronics")
+)
 
 fun main() {
     // 2. สร้างรายการสินค้าตัวอย่าง (List<Product>)
@@ -14,15 +23,7 @@ fun main() {
     // สินค้า name = "Keyboard", price = 499.0, category = "Electronics" // ราคาไม่เกิน 500
     // สินค้า name = "Jeans", price = 1200.0, category = "Apparel"
     // สินค้า name = "Headphones", price = 1800.0, category = "Electronics" // ตรงตามเงื่อนไข
-    val products = listOf(
-        Product("Laptop", 35000.0, "Electronics"),
-        Product("Smartphone", 25000.0, "Electronics"),
-        Product("T-shirt", 450.0, "Apparel"),
-        Product("Monitor", 7500.0, "Electronics"),
-        Product("Keyboard", 499.0, "Electronics"),
-        Product("Jeans", 1200.0, "Apparel"),
-        Product("Headphones", 1800.0, "Electronics")
-    )
+
 
     println("รายการสินค้าทั้งหมด:")
 products.forEach { println(it) }
@@ -35,10 +36,7 @@ products.forEach { println(it) }
     // กรองสินค้าที่ราคามากกว่า 500
     // ดึงเฉพาะราคาออกมาเป็น List<Double>
     // หาผลรวมของราคา
-    val totalElecPriceOver500 = products
-        .filter { it.price > 500.0 }
-        .filter { it.category == "Electronics"}
-        .sumOf { it.price }
+    val totalElecPriceOver500 = calculateTotalElectronicsPriceOver500(products)
 
     println("วิธีที่ 1: ใช้ Chaining กับ List")
  println("ผลรวมราคาสินค้า Electronics ที่ราคา > 500 บาท: $totalElecPriceOver500 บาท")
@@ -90,4 +88,26 @@ products.forEach { println(it) }
 //    println("   - เช่น: 'Laptop' จะถูก filter category -> filter price -> map price จากนั้น 'Smartphone' ถึงจะเริ่มทำกระบวนการเดียวกัน")
 //    println("   - จะไม่มีการสร้าง Collection กลางทาง ทำให้ประหยัดหน่วยความจำและเร็วกว่ามากสำหรับชุดข้อมูลขนาดใหญ่ เพราะทำงานกับข้อมูลทีละชิ้นและทำทุกขั้นตอนให้เสร็จในรอบเดียว")
 //    println("   - การคำนวณจะเกิดขึ้นเมื่อมี 'Terminal Operation' มาเรียกใช้เท่านั้น (ในที่นี้คือ .sum())")
+    val count = countElectronicsPriceOver500(products)
+    println(count)
+}
+
+fun calculateTotalElectronicsPriceOver500(
+    products: List<Product>,
+):Double {
+    return  products
+        .filter { it.price > 500.0 }
+        .filter { it.category == "Electronics"}
+        .sumOf { it.price }
+
+}
+fun countElectronicsPriceOver500(products: List<Product>): Int{
+    val products = products
+        .filter { it.price > 500.0 }
+        .filter { it.category == "Electronics"}
+
+    val count = products.count()
+
+    return count
+
 }
